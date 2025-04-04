@@ -41,4 +41,4 @@ wheels:
 clean:
 	rm -rf build/ dist/ wheelhouse/
 	rm -f mojo_arrow_sys/*.so mojo_arrow_sys/*.dylib
-	rm -f *.egg-info
+	rm -rf *.egg-info
