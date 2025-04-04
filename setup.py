@@ -10,7 +10,7 @@ mojo_arrow_sys_module = Extension(
 
 setup(
     name='mojo_arrow_sys',
-    version='0.1.0',
+    version='0.1.1',
     description='Python C extension for accessing Arrow C streams from Mojo',
     author='Marius Seritan',
     author_email='pypi@seritan.net',
