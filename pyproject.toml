@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=42", "wheel"]
+requires = ["setuptools>=42", "wheel", "cibuildwheel>=2.16.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -15,10 +15,26 @@ classifiers = [
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
-    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS :: MacOS X",
     "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 [project.urls]
 Homepage = "https://github.com/winding-lines/mojo_arrow_sys"
 BugTracker = "https://github.com/winding-lines/mojo_arrow_sys/issues"
+
+[tool.cibuildwheel]
+build = "cp37-* cp38-* cp39-* cp310-* cp311-* cp312-*"
+skip = "pp* *_i686 *_ppc64le *-musllinux*" 
+archs = "auto64"
+
+[tool.cibuildwheel.linux]
+before-all = "yum install -y gcc"
+
+[tool.cibuildwheel.macos]
+archs = "x86_64 arm64"

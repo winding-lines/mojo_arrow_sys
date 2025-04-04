@@ -17,7 +17,7 @@ else
 endif
 
 # Targets
-.PHONY: all clean build install test
+.PHONY: all clean build install test dist wheels
 
 all: build
 
@@ -30,7 +30,15 @@ install:
 test: build
 	$(UV) run $(PYTHON) -m pytest tests/
 
+dist: clean
+	$(UV) run $(PYTHON) -m pip install build
+	$(UV) run $(PYTHON) -m build
+
+wheels:
+	$(UV) run $(PYTHON) -m pip install cibuildwheel
+	$(UV) run $(PYTHON) -m cibuildwheel --output-dir wheelhouse
+
 clean:
-	rm -rf build/
+	rm -rf build/ dist/ wheelhouse/
 	rm -f mojo_arrow_sys/*.so mojo_arrow_sys/*.dylib
 	rm -f *.egg-info

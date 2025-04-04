@@ -61,6 +61,31 @@ make build
 make test
 ```
 
+### Building Distribution Packages
+
+To build source distribution and wheel:
+```bash
+make dist
+```
+
+To build wheels for multiple platforms (using cibuildwheel locally):
+```bash
+make wheels
+```
+
+## CI/CD
+
+This package uses GitHub Actions for continuous integration and deployment:
+
+- Automatically builds wheels for macOS (x86_64 and arm64) and Linux (x86_64)
+- Supports Python versions 3.7 through 3.12
+- Automatically publishes to PyPI when a new release is created
+
+To publish a new version:
+1. Update the version in `pyproject.toml` and `setup.py`
+2. Create a new GitHub release
+3. The GitHub Actions workflow will automatically build and publish the package to PyPI
+
 ## License
 
 MIT
