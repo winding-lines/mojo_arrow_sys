@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=42", "wheel", "cibuildwheel>=2.16.0"]
+requires = ["setuptools>=42", "wheel", "cibuildwheel>=2.13.1", "setuptools_scm>=8.0.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "mojo_arrow_sys"
-version = "0.1.1"
+dynamic = ["version"]
 description = "Python C extension for accessing Arrow C streams from Mojo"
 authors = [{name = "Marius Seritan", email = "pypi@seritan.net"}]
 requires-python = ">=3.7"
@@ -41,3 +41,6 @@ before-all = "yum install -y gcc"
 
 [tool.cibuildwheel.macos]
 archs = "x86_64 arm64"
+
+[tool.setuptools_scm]
+write_to = "mojo_arrow_sys/_version.py"
