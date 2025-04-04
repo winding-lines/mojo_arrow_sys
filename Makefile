@@ -22,10 +22,10 @@ endif
 all: build
 
 build:
-	$(UV) run $(PYTHON) setup.py build_ext --inplace
+	$(UV) run $(PYTHON) -m pip install -e .
 
 install:
-	$(UV) run $(PYTHON) setup.py install
+	$(UV) run $(PYTHON) -m pip install .
 
 test: build
 	$(UV) run $(PYTHON) -m pytest tests/

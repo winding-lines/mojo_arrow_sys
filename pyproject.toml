@@ -28,9 +28,21 @@ dependencies = [
 Homepage = "https://github.com/winding-lines/mojo_arrow_sys"
 BugTracker = "https://github.com/winding-lines/mojo_arrow_sys/issues"
 
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mojo_arrow_sys*"]
+
+[tool.setuptools.package-data]
+mojo_arrow_sys = ["*.c"]
+
+[[tool.setuptools.ext-modules]]
+name = "mojo_arrow_sys"
+sources = ["mojo_arrow_sys/mojo_arrow_sys.c"]
+extra-compile-args = ["-Wall", "-Wextra"]
+
 [tool.cibuildwheel]
-build = "cp37-* cp38-* cp39-* cp310-* cp311-* cp312-*"
-skip = "pp* *_i686 *_ppc64le *-musllinux*" 
+build = "cp310-* cp311-* cp312-*"
+skip = "pp* *_i686 *_ppc64le *-musllinux* cp3*-macosx*" 
 archs = "auto64"
 
 [tool.cibuildwheel.linux]
