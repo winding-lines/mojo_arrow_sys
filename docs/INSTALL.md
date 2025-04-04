@@ -11,7 +11,7 @@ pip install mojo_arrow_sys
 Pre-built wheels are available for:
 - macOS (x86_64 and arm64)
 - Linux (x86_64)
-- Python versions 3.7 through 3.12
+- Python versions 3.10 through 3.12
 
 ## Installing from Source
 

@@ -45,7 +45,7 @@ stream_capsule = mojo_arrow_sys.arrow_stream(table)
 
 ### Prerequisites
 
-- Python 3.7+
+- Python 3.10+
 - C compiler (gcc, clang, MSVC, etc.)
 - pyarrow (for testing)
 
