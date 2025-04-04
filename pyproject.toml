@@ -20,5 +20,5 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/mseritan/mojo_arrow_sys"
-BugTracker = "https://github.com/mseritan/mojo_arrow_sys/issues"
+Homepage = "https://github.com/winding-lines/mojo_arrow_sys"
+BugTracker = "https://github.com/winding-lines/mojo_arrow_sys/issues"
