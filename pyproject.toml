@@ -37,7 +37,7 @@ mojo_arrow_sys = ["*.c"]
 
 [[tool.setuptools.ext-modules]]
 name = "mojo_arrow_sys"
-sources = ["mojo_arrow_sys/mojo_arrow_sys.c"]
+sources = ["src/mojo_arrow_sys.c"]
 extra-compile-args = ["-Wall", "-Wextra"]
 
 [tool.cibuildwheel]
@@ -52,4 +52,4 @@ before-all = "yum install -y gcc"
 archs = "x86_64 arm64"
 
 [tool.setuptools_scm]
-write_to = "mojo_arrow_sys/_version.py"
+write_to = "src/_version.py"

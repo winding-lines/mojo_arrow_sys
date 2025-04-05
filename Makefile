@@ -22,10 +22,10 @@ endif
 all: build
 
 build:
-	$(UV) run $(PYTHON) -m pip install -e .
+	$(UV) pip install -e .
 
 install:
-	$(UV) run $(PYTHON) -m pip install .
+	$(UV) pip install .
 
 test: build
 	$(UV) run $(PYTHON) -m pytest tests/
@@ -40,5 +40,5 @@ wheels:
 
 clean:
 	rm -rf build/ dist/ wheelhouse/
-	rm -f mojo_arrow_sys/*.so mojo_arrow_sys/*.dylib
+	rm -f src/*.so src/*.dylib
 	rm -rf *.egg-info
