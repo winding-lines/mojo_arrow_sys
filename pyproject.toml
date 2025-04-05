@@ -53,3 +53,5 @@ archs = "x86_64 arm64"
 
 [tool.setuptools_scm]
 write_to = "src/_version.py"
+version_scheme = "release-branch-semver"
+local_scheme = "no-local-version"
