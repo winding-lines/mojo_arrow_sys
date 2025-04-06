@@ -15,6 +15,8 @@ typedef struct ArrowArray ArrowArray;
 
 /**
  * Read the pointer from the Python capsule and into the output pointer provided by the user.
+ * 
+ * Note: this is to be called directly from Mojo, not from Python.
  *
  * Returns 0 on success, a negative number on failure.
  */  
@@ -34,7 +36,9 @@ int mos_read_arrow_array_stream(PyObject * capsule, ArrowArrayStream** out_strea
 
 const char* mos_capsule_get_name(PyObject * capsule) {
   // read information about the capsule.
-  return PyCapsule_GetName(capsule);
+  const char * name = PyCapsule_GetName(capsule);
+  printf("Capsule get_name %s", name);
+  return name;
 } 
 
 /** 
