@@ -13,19 +13,29 @@ typedef struct ArrowArrayStream {
 typedef struct ArrowSchema ArrowSchema;
 typedef struct ArrowArray ArrowArray;
 
-void mos_read_arrow_array_stream(PyObject * capsule, ArrowArrayStream** out_stream) {
+/**
+ * Read the pointer from the Python capsule and into the output pointer provided by the user.
+ *
+ * Returns 0 on success, a negative number on failure.
+ */  
+int mos_read_arrow_array_stream(PyObject * capsule, ArrowArrayStream** out_stream) {
     // Check if it's a valid PyCapsule
     if (!PyCapsule_IsValid(capsule, "arrow_array_stream")) {
-        Py_DECREF(capsule);
-        // "__arrow_c_stream__ did not return a valid ArrowArrayStream capsule"
-        *out_stream = NULL;
+      Py_DECREF(capsule);
+      // "__arrow_c_stream__ did not return a valid ArrowArrayStream capsule"
+      *out_stream = NULL;
+      return -1;
     }
     
     // Extract the ArrowArrayStream pointer
     *out_stream = (ArrowArrayStream*)PyCapsule_GetPointer(capsule, "arrow_array_stream");
+    return 0;
 }
 
 
+/** 
+  * A python accessible extension function for testing.
+  */
 static PyObject* arrow_stream(PyObject* self, PyObject* args) {
     PyObject* obj;
     
