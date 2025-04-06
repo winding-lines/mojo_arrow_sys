@@ -32,6 +32,10 @@ int mos_read_arrow_array_stream(PyObject * capsule, ArrowArrayStream** out_strea
     return 0;
 }
 
+const char* mos_capsule_get_name(PyObject * capsule) {
+  // read information about the capsule.
+  return PyCapsule_GetName(capsule);
+} 
 
 /** 
   * A python accessible extension function for testing.
