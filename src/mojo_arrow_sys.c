@@ -1,18 +1,6 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
-// ArrowArrayStream struct definition
-typedef struct ArrowArrayStream {
-    int (*get_schema)(struct ArrowArrayStream*, struct ArrowSchema*);
-    int (*get_next)(struct ArrowArrayStream*, struct ArrowArray*);
-    void (*release)(struct ArrowArrayStream*);
-    void* private_data;
-} ArrowArrayStream;
-
-// ArrowSchema and ArrowArray forward declarations
-typedef struct ArrowSchema ArrowSchema;
-typedef struct ArrowArray ArrowArray;
-
 /**
  * Read the pointer from the Python capsule and into the output pointer provided by the user.
  * 
@@ -20,24 +8,22 @@ typedef struct ArrowArray ArrowArray;
  *
  * Returns 0 on success, a negative number on failure.
  */  
-int mos_read_arrow_array_stream(PyObject * capsule, ArrowArrayStream** out_stream) {
+int mos_capsule_get_pointer(PyObject * capsule, const char* capsule_name, void** output) {
     // Check if it's a valid PyCapsule
-    if (!PyCapsule_IsValid(capsule, "arrow_array_stream")) {
+    if (!PyCapsule_IsValid(capsule, capsule_name)) {
       Py_DECREF(capsule);
-      // "__arrow_c_stream__ did not return a valid ArrowArrayStream capsule"
-      *out_stream = NULL;
+      *output = NULL;
       return -1;
     }
     
-    // Extract the ArrowArrayStream pointer
-    *out_stream = (ArrowArrayStream*)PyCapsule_GetPointer(capsule, "arrow_array_stream");
+    // Extract the capsule pointer
+    *output = PyCapsule_GetPointer(capsule, capsule_name);
     return 0;
 }
 
 const char* mos_capsule_get_name(PyObject * capsule) {
   // read information about the capsule.
   const char * name = PyCapsule_GetName(capsule);
-  printf("Capsule get_name %s", name);
   return name;
 } 
 
@@ -77,13 +63,6 @@ static PyObject* arrow_stream(PyObject* self, PyObject* args) {
         Py_DECREF(capsule);
         PyErr_SetString(PyExc_TypeError, "__arrow_c_stream__ did not return a valid ArrowArrayStream capsule");
         return NULL;
-    }
-    
-    // Extract the ArrowArrayStream pointer
-    ArrowArrayStream* stream = (ArrowArrayStream*)PyCapsule_GetPointer(capsule, "arrow_array_stream");
-    if (!stream) {
-        Py_DECREF(capsule);
-        return NULL;  // PyCapsule_GetPointer sets an exception
     }
     
     // For demonstration, we'll return the capsule itself
