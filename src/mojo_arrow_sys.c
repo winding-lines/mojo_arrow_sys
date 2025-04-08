@@ -8,7 +8,7 @@
  *
  * Returns 0 on success, a negative number on failure.
  */  
-int mos_capsule_get_pointer(PyObject * capsule, const char* capsule_name, void** output) {
+int mos_capsule_get_pointer_real(PyObject * capsule, const char* capsule_name, void** output) {
     FILE *logfile = fopen("/tmp/mas.log", "a");
     if (logfile) {
         fprintf(logfile, "mos_capsule_get_pointer called with capsule_name: %s\n", capsule_name);
@@ -36,6 +36,26 @@ int mos_capsule_get_pointer(PyObject * capsule, const char* capsule_name, void**
     }
     
     return 0;
+}
+
+struct Fake {
+  const char * (*foo)(int);
+};
+
+const char *fake(int i) {
+    FILE *logfile = fopen("/tmp/mas.log", "a");
+    if (logfile) {
+        fprintf(logfile, "mos_fake called \n");
+        fclose(logfile);
+    }
+  return "hello";
+}
+
+int mos_capsule_get_pointer(PyObject * capsule, const char* capsule_name, void** output) {
+  struct Fake * jack = (struct Fake*)malloc(sizeof(struct Fake));
+  jack->foo = fake;
+  *output = jack;
+  return 0;
 }
 
 const char* mos_capsule_get_name(PyObject * capsule) {
