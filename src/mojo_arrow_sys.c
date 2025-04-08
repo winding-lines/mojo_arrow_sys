@@ -9,15 +9,30 @@
  * Returns 0 on success, a negative number on failure.
  */  
 int mos_capsule_get_pointer(PyObject * capsule, const char* capsule_name, void** output) {
+    FILE *logfile = fopen("/tmp/mas.log", "a");
+    if (logfile) {
+        fprintf(logfile, "mos_capsule_get_pointer called with capsule_name: %s\n", capsule_name);
+    }
+    
     // Check if it's a valid PyCapsule
     if (!PyCapsule_IsValid(capsule, capsule_name)) {
-      Py_DECREF(capsule);
-      *output = NULL;
-      return -1;
+        if (logfile) {
+            fprintf(logfile, "Invalid capsule for name: %s\n", capsule_name);
+            fclose(logfile);
+        }
+        Py_DECREF(capsule);
+        *output = NULL;
+        return -1;
     }
     
     // Extract the capsule pointer
     *output = PyCapsule_GetPointer(capsule, capsule_name);
+    
+    if (logfile) {
+        fprintf(logfile, "Extracted pointer: %p\n", *output);
+        fclose(logfile);
+    }
+    
     return 0;
 }
 
