@@ -30,6 +30,8 @@ int mos_capsule_get_pointer(PyObject * capsule, const char* capsule_name, void**
     
     if (logfile) {
         fprintf(logfile, "Extracted pointer: %p\n", *output);
+        uint64_t * first_function = (uint64_t*)(*output);
+        fprintf(logfile, "  first function pointer: %llu\n", *first_function);
         fclose(logfile);
     }
     
