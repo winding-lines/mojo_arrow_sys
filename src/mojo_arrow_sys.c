@@ -26,6 +26,7 @@ int mos_capsule_get_pointer(PyObject * capsule, const char* capsule_name, void**
     }
     
     // Extract the capsule pointer
+    Py_INCREF(capsule);
     *output = PyCapsule_GetPointer(capsule, capsule_name);
     
     if (logfile) {
@@ -36,6 +37,25 @@ int mos_capsule_get_pointer(PyObject * capsule, const char* capsule_name, void**
     }
     
     return 0;
+}
+
+struct Fake {
+  int (*foo)(int);
+};
+
+int fake(int i) {
+    FILE *logfile = fopen("/tmp/mas.log", "a");
+    if (logfile) {
+        fprintf(logfile, "mos_fake called \n");
+        fclose(logfile);
+    }
+  return 0;
+}
+
+int mos_fake_get_pointer(PyObject * capsule, const char* capsule_name, void** output) {
+  struct Fake * jack = (struct Fake*)malloc(sizeof(struct Fake));
+  jack->foo = fake;
+  return 0;
 }
 
 const char* mos_capsule_get_name(PyObject * capsule) {
