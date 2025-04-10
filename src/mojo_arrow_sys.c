@@ -25,14 +25,6 @@ int mos_capsule_get_pointer(PyObject * capsule, const char* capsule_name, void**
     return 0;
 }
 
-const char* mos_capsule_get_name(PyObject * capsule) {
-    // Read the capsuke name, mostly for debugging.
-    // We need to increase the reference count otherwise we get garbage. This creates a memory leak.
-    Py_INCREF(capsule);
-    const char * name = PyCapsule_GetName(capsule);
-    return name;
-} 
-
 /** 
   * A python accessible extension function for testing.
   */
